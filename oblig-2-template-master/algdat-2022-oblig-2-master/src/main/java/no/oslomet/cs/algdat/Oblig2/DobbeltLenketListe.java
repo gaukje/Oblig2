@@ -33,15 +33,38 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     // instansvariabler
     private Node<T> hode;          // peker til den første i listen
     private Node<T> hale;          // peker til den siste i listen
-    private int antall;            // antall noder i listen
-    private int endringer;         // antall endringer i listen
+    private int antall;            // antall noder i listen         (Skal økes med 1 for hver innlegging og reduseres med 1 for hver fjerning)
+    private int endringer;         // antall endringer i listen     (Skal økes med 1 for hver endring)
 
     public DobbeltLenketListe() {
         throw new UnsupportedOperationException();
     }
 
     public DobbeltLenketListe(T[] a) {
-        throw new UnsupportedOperationException();
+        //Får feilmelding dersom a == null
+        Objects.requireNonNull(a,"Tabellen a kan ikke være nulL!");
+
+        //Finner første element som ikke er null
+        int i = 0; for (; int i < a.length && a[i] == null; i++);
+
+        if (i < a.length) {
+            Node<T> p = hode = new Node<>(a[i], null, null);       //Oppretter den første noden ved hode uten pekere
+            antall++;
+            endringer++;
+
+            //Fortsetter gjennom a så langt det lar seg gjøre (a[i] != null) og oppretter node og pekere for hvert element i a
+            for (i++; i < a.length; i++) {
+                if (a[i] != null) {
+                    p = p.neste = new Node<>(a[i], p, null);
+                    antall++;
+                    endringer++;
+                }
+                hale = p;
+                hale.neste = null;
+                hode.forrige = null;
+            }
+        }
+        //throw new UnsupportedOperationException();
     }
 
     public Liste<T> subliste(int fra, int til) {
@@ -50,12 +73,16 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public int antall() {
-        throw new UnsupportedOperationException();
+        //Returnerer antall
+        return antall;
+        //throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean tom() {
-        throw new UnsupportedOperationException();
+        //Returerner true dersom antall = 0
+        return antall == 0;
+        //throw new UnsupportedOperationException();
     }
 
     @Override
