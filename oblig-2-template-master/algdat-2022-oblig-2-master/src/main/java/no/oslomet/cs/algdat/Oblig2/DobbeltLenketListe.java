@@ -6,6 +6,7 @@ package no.oslomet.cs.algdat.Oblig2;
 
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.Objects;
 
 
 public class DobbeltLenketListe<T> implements Liste<T> {
@@ -132,11 +133,48 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public String toString() {
-        throw new UnsupportedOperationException();
+        StringBuilder s = new StringBuilder();          //Benytter StringBuilder for å opprette tegnstrengen.
+        s.append('[');                              //Begynner med "[" og slutter med "]" for å få på formatet : "[1,2,3]"
+
+        if(!tom()) {                                //Hvis den lenkede listen ikke er tom:
+            Node<T> p = hode;                       //Begynner vi på den første noden og legger verdien inn i strengen,
+            s.append(p.verdi);
+
+            p = p.neste;                            //peker på neste node
+
+            while (p != null) {             //Fortsetter om det gjenstår flere elementer
+                s.append(',').append(' ').append(p.verdi);
+                p = p.neste;
+            }
+        }
+
+        s.append(']');
+
+        return s.toString();
+        //throw new UnsupportedOperationException();
     }
 
+    //Gjør akkuratt det samme som toString(), men skal gå baklengs
     public String omvendtString() {
-        throw new UnsupportedOperationException();
+        StringBuilder s = new StringBuilder();
+        s.append('[');
+
+        if(!tom()) {
+            Node<T> p = hale;                          //Begynner på bakerste node
+            s.append(p.verdi);
+
+            p = p.forrige;                            //peker på forrige node
+
+            while (p != null) {
+                s.append(',').append(' ').append(p.verdi);
+                p = p.forrige;
+            }
+        }
+
+        s.append(']');
+
+        return s.toString();
+        //throw new UnsupportedOperationException();
     }
 
     @Override
