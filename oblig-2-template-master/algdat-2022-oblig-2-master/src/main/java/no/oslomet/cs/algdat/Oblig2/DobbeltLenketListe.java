@@ -94,10 +94,25 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     public boolean leggInn(T verdi) {
         //Gir feilmelding dersom verdi er null
         Objects.requireNonNull(verdi, "Ikke tillatt med null-verdier!");
-        //Sjekker om det er lovlige grenser.
 
+        //Indekskontroll?
+
+        Node<T> node = new Node<>(verdi);
+
+        if (tom()) {
+            hode = hale = node;
+            antall++;
+            endringer++;
+            return true;
+        } else {
+            node = hale.forrige;
+            hale = node.neste;
+            node = hale;
+            antall++;
+            endringer++;
+            return true;
+        }
         //throw new UnsupportedOperationException();
-        return true;
     }
 
     @Override
