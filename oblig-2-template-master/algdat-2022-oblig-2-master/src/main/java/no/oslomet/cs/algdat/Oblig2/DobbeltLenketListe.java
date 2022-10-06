@@ -38,7 +38,10 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     private int endringer;         // antall endringer i listen     (Skal økes med 1 for hver endring)
 
     public DobbeltLenketListe() {
-        throw new UnsupportedOperationException();
+        hode = hale;
+        antall = 0;
+        endringer = 0;
+        //throw new UnsupportedOperationException();
     }
 
     public DobbeltLenketListe(T[] a) {
@@ -46,7 +49,8 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         Objects.requireNonNull(a,"Tabellen a kan ikke være nulL!");
 
         //Finner første element som ikke er null
-        int i = 0; for (; int i < a.length && a[i] == null; i++);
+        int i = 0;
+        for (; i < a.length && a[i] == null; i++);
 
         if (i < a.length) {
             Node<T> p = hode = new Node<>(a[i], null, null);       //Oppretter den første noden ved hode uten pekere
@@ -88,7 +92,12 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public boolean leggInn(T verdi) {
-        throw new UnsupportedOperationException();
+        //Gir feilmelding dersom verdi er null
+        Objects.requireNonNull(verdi, "Ikke tillatt med null-verdier!");
+        //Sjekker om det er lovlige grenser.
+
+        //throw new UnsupportedOperationException();
+        return true;
     }
 
     @Override
